@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,12 +19,12 @@ import javax.transaction.Transactional;
 import java.sql.SQLException;
 
 @Controller
-
+@RequestMapping("/checkout")
 public class CheckoutController {
     @Autowired
     CheckoutService checkoutService;
 
-    @RequestMapping("checkout/{userId}/{Money}")
+    @RequestMapping("/{userId}/{Money}")
     public String create(Model model,@PathVariable Long userId,@PathVariable Long Money) {
         model.addAttribute("userId",userId);
         model.addAttribute("Money",Money);
@@ -36,7 +37,8 @@ public class CheckoutController {
                                  ) throws SQLException {
 
         checkoutService.saveCheckout(checkoutDto);
-        throw new Error("test");
-//        throw new RuntimeException("test");
+     return "redirect:/ThankingPage";
     }
+
+
 }

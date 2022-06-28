@@ -1,9 +1,30 @@
 <%@page pageEncoding="UTF-8" %>
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <style>
+        <style>
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
 
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            padding: 12px 16px;
+            z-index: 1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+    </style>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
@@ -16,6 +37,8 @@
     <link href="/css/animate.css" rel="stylesheet">
     <link href="/css/main.css" rel="stylesheet">
     <link href="/css/responsive.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
     <!--[if lt IE 9]>
     <script src="/js/html5shiv.js"></script>
     <script src="/js/respond.min.js"></script>
@@ -93,8 +116,40 @@
                             <li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
                             <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
                             <li><a href=""><i class="fa fa-shopping-cart"></i> Cart</a></li>
-                            <li><a href="/login"><i class="fa fa-lock"></i> Login</a></li>
-                        </ul>
+                            <li><a class="fa fa-lock" href="/login"><i class="fa fa-lock"></i>Login</></a></li>
+                            <li><div class="btn-group">
+                                <sec:authorize access="isAuthenticated()">
+                                    <button type="button" class="btn btn-default dropdown-toggle usa"
+                                            data-toggle="dropdown">
+                                        <sec:authentication
+                                                property="principal.fullName"></sec:authentication>
+                                        <span class="caret"></span>
+                                    </button>
+                                    <%--                                                <sec:authentication property="principal.fullName"></sec:authentication>--%>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
+                                        <li><a class="dropdown-item" href="/user/change-pass">Đổi mật
+                                            khẩu</a></li>
+                                        <li><a class="dropdown-item" href="/backend/product/create">đăng sản phẩm</a></li>
+                                        <li><a class="dropdown-item" href="/listproduct2">sản phẩm đã đăng</a></li>
+                                        <li><form action="/sercurity/addCart-form" method="post">
+                                                <%--                                        <ư> sffffgf ${user.email}</ư>--%>
+                                            <input type="number" name="idUser" value="${user.id}" hidden />
+                                            <button type="submit" class="btn btn-fefault cart" >
+                                                <i class="fa fa-shopping-cart"></i>
+                                                giỏ hàng
+                                            </button>
+                                        </form></li>
+                                        <li><a class="dropdown-item" href="backend/user/list">danh sách tài khoản</a></li>
+                                        <li><a class="dropdown-item" href="/logout">Đăng xuất</a></li>
+                                    </ul>
+                                </sec:authorize>
+                                <sec:authorize access="!isAuthenticated()">
+                                    <a class="nav-link" href="/login2"><spring:message
+                                            code="title.login"/></a>
+                                </sec:authorize>
+                            </div>
+                                </i>
+                           </li>
                     </div>
                 </div>
             </div>

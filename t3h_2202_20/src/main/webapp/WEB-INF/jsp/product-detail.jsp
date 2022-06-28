@@ -1,5 +1,9 @@
+<%@ page import="java.text.DecimalFormat" %>
 <%@page pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+
+<% DecimalFormat formatter = new DecimalFormat("###,###,###"); %>
 
 
 <jsp:include page="/WEB-INF/jsp/common/head.jsp"></jsp:include>
@@ -58,14 +62,12 @@
                                     <p>ID: ${product.id}</p>
                                     <img src="images/product-details/rating.png" alt="">
                                     <span>
-									<span>${product.price} VNĐ</span>
+									<span><p>Giá: <fmt:formatNumber value = "${product.price}" type = "currency"/></p></span>
                                      <form action="/addCart-form" method="post" >
                                         <input  type="number" name="userId" value="${user.id}" hidden/>
                                          <input type="number" name="productId" value="${product.id}" placeholder="Your Name" hidden/ >
                                          <input type="number" name="quantity" value="1" hidden/>
-
-
-                                         <button type="submit" class="btn btn-fefault cart" href="cart/${user.id}">
+                                         <button type="submit" align="center" class="btn btn-fefault cart" href="cart/${user.id}">
 										<i class="fa fa-shopping-cart"></i>
 										Thêm vào giỏ hàng
 									</button>

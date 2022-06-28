@@ -25,7 +25,7 @@ public class BackendUserController {
     @Autowired
     UserService userService;
 
-
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping("create")
     public String create() {
         return "backend/user/create";
@@ -40,7 +40,7 @@ public class BackendUserController {
 //        response.sendRedirect("/backend/user/create");
         return "redirect:/backend/user/create";
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("list")
     public String loadPageList(@PagingAndSortParam(path = "user")PagingAndSortObject pagingAndSortObject) throws SQLException {
         userService.danhsach(pagingAndSortObject);

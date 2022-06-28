@@ -76,4 +76,9 @@ public class HomeController {
         return "login";
     }
 
+    @RequestMapping("ThankingPage")
+    public String thankingPage(Model model){
+        return "ThankingPage";
+    }
+
 }
